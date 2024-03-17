@@ -25,8 +25,8 @@ class Token(BaseModel):
 
 @router.post("/login")
 async def user_login(model: _LoginModel):
-    if model.username == "example" and model.password == "example":
-        exp = datetime.now() + timedelta(seconds=config.TOKEN_EXPIRE_SECONDS)
+    if model.username == config.USERNAME and model.password == config.PASSWORD:
+        exp = datetime.utcnow() + timedelta(seconds=config.TOKEN_EXPIRE_SECONDS)
         token = gen_token({"username": model.username}, exp)
         return JSONResponse(status_code=200, content={"token": token})
     

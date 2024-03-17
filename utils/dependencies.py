@@ -9,4 +9,5 @@ def check_token(token: typing.Annotated[str, Header()] = ""):
     token = decode_token(token)
     if token is None:
         raise HTTPException(status_code=401, detail={"msg": "You must login before request this resource."})
+    print(f"This is token: {token}")
     return token

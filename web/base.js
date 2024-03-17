@@ -1,4 +1,4 @@
-window.host = "http://localhost:8000"
+window.host = "http://localhost:8001"
 
 async function sendJSONWithToken(url, payload, noToken){
     console.log(url)

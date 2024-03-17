@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
+
+import config
 from views.files import router as file_router
 from views.user import router as user_router
 
@@ -11,7 +13,8 @@ app.include_router(file_router)
 app.include_router(user_router)
 
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=config.ROOT_FOLDER), name="static")
+app.mount("/web", StaticFiles(directory="web"), name="web")
 
 @app.get("/uploadfile")
 async def upload_file():
@@ -19,7 +22,7 @@ async def upload_file():
 
 @app.get("/")
 async def index():
-    with open("./static/web/index.html", "r", encoding="utf-8") as f:
+    with open("./web/index.html", "r", encoding="utf-8") as f:
         html = f.read()
     headers = {"Content-Type": "text/html"}
     response = Response(status_code=200, content=html, headers=headers)

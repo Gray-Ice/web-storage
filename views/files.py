@@ -5,11 +5,9 @@ import typing
 from typing_extensions import Annotated
 import os
 from utils import check_token
+from config import ROOT_FOLDER
 
 router = APIRouter(prefix="/files", dependencies=[Depends(check_token)])
-
-
-ROOT_FOLDER = "static"
 
 
 class _GetFileModel(BaseModel):
@@ -45,6 +43,8 @@ async def upload_file(file: UploadFile, path: Annotated[str, Form()] = "/", name
     else:
         filename = name
     path = f"{ROOT_FOLDER}{path}"
+    if path.startswith("/web/"):
+        return JSONResponse(status_code=500, content={"You can't upload files to this path."})
     if not os.path.exists(path):
         return JSONResponse(status_code=500, content={"msg": f"can not find path: {path}"})
     if not path.endswith("/"):
