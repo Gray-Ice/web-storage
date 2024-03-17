@@ -117,7 +117,7 @@ async function gotoDir(name){
     }
     let data = await getFile();
     _cleanDirBox();
-    if(typeof data === undefined){
+    if(typeof data === "undefined"){
         return
     }
     console.log(`This is the data before render: ${data}`)

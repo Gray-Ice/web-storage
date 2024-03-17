@@ -8,7 +8,7 @@ TOKEN_EXPIRE_SECONDS = 60 * 60 * 24 * 30
 USERNAME = "example"
 PASSWORD = "example"
 
-BACKEND_PATH = "http://localhost:8001"
+BACKEND_PATH = "http://localhost:8000"
 
 def init():
     with open("./web/base.js", "r", encoding="utf-8") as f:
