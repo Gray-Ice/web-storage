@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="./static/web/files.css">
+        <!-- <link rel="stylesheet" href="./static/web/element.css"> -->
+        <script>
+            window.host = "http://localhost:8000"
+            window.token = ""
+        </script>
+        <script src="./static/web/base.js" defer></script>
+        <script src="./static/web/user.js" defer></script>
+    </head>
+    <body>
+        <div>
+            <div>
+                <p>Username: <input type="text" id="username" value="example"></p>
+                <p>Password: <input type="text" id="password" value="example"></p>
+                <p><button onclick="login()">Login</button></p>
+            </div>
+            <div>
+                <p>Upload file: <input type="file" id="fileInput"></p>
+                <p><button onclick="uploadFile()">Sure</button></p>
+            </div>
+            <div>
+                <p>Folders</p>
+                <div class="controlPanel">
+                <p><button onclick="gotoDir()">GetFile</button></p>
+                <p><button onclick="_backToLastFolder()">Back</button></p>
+                </div>
+                <p>Current Path: <span id="currentPath">undefined</span></p>
+                <div id="folders">
+                </div>
+            </div>
+        </div>
+        <script src="./static/web/file_operations.js" defer></script>
+    </body>
+</html>

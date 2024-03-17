@@ -1,0 +1,14 @@
+.folder {
+    color: blue;
+    text-decoration: underline;
+}
+
+.file {
+    cursor: pointer;
+    color: black;
+}
+
+.controlPanel{
+    display: flex;
+    flex-direction: column;
+}
