@@ -1,5 +1,5 @@
 ## Overview
-[简体中文](https://github.com/Gray-Ice/web-storage/zh_README.md)
+[简体中文](https://github.com/Gray-Ice/web-storage/blob/main/zh_README.md)
 This project is for storage and manage your file. I would like to use it with FRP. It's for store files, because I don't want to buy Object Storage service, so I use it.
 
 ## How to Use it
