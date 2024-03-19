@@ -15,3 +15,4 @@ You can modify the configuration file at `config.py`. I've not considered multip
 
 ## TODO List
  - [ ] File access control
+- [ ] Delete file

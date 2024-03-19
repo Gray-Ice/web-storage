@@ -1,3 +1,5 @@
+import shutil
+
 from fastapi import APIRouter, UploadFile, Form, Depends
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
@@ -52,3 +54,18 @@ async def upload_file(file: UploadFile, path: Annotated[str, Form()] = "/", name
     with open(f"{path}{filename}", "wb") as f:
         f.write(await file.read())
     return JSONResponse(status_code=200, content={"msg": f"{path}{filename} already created"})
+
+
+class _DeleteFileModel(BaseModel):
+    path: str
+
+
+@router.post("/delete")
+async def delete_file(model: _DeleteFileModel):
+    if not os.path.exists(model.path):
+        return JSONResponse(status_code=500, content={"msg": f"Can not found path {model.path}"})
+    if os.path.isdir(model.path):
+        shutil.rmtree(model.path)
+        return JSONResponse(status_code=200, content={"msg": f"remove folder {model.path} success"})
+    os.remove(model.path)
+    return JSONResponse(status_code=200, content={"msg": f"removed path {model.path}."})
