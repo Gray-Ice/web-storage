@@ -55,7 +55,7 @@ async def upload_file(file: UploadFile, path: Annotated[str, Form()] = "/", name
     :param name: if you specified the name,
      the file will be renamed to name, or it will use the default file name already belongs the file
     """
-    print(f"The root path is {path}")
+    print(f"The root path is {path}. filename is: {file.filename}")
     if name == "":
         filename = file.filename
     else:
@@ -82,9 +82,9 @@ async def delete_file(model: _DeleteFileModel):
     Delete the file that pointed to by the path
     """
     if not os.path.exists(model.path):
-        return JSONResponse(status_code=500, content={"msg": f"Can not found path {model.path}"})
+        return JSONResponse(status_code=200, content={"msg": f"Can not found path {model.path}", "code": 500})
     if os.path.isdir(model.path):
         shutil.rmtree(model.path)
-        return JSONResponse(status_code=200, content={"msg": f"remove folder {model.path} success"})
+        return JSONResponse(status_code=200, content={"msg": f"remove folder {model.path} success", "code": 200})
     os.remove(model.path)
-    return JSONResponse(status_code=200, content={"msg": f"removed path {model.path}."})
+    return JSONResponse(status_code=200, content={"msg": f"removed path {model.path}.", "code": 200})

@@ -6,11 +6,13 @@ from fastapi.middleware.cors import CORSMiddleware
 import config
 from views.files import router as file_router
 from views.user import router as user_router
+from views.notes import router as notes_router
 
 app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"], allow_credentials=True)
 app.include_router(file_router)
 app.include_router(user_router)
+app.include_router(notes_router)
 
 
 app.mount("/static", StaticFiles(directory=config.ROOT_FOLDER), name="static")

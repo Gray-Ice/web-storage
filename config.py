@@ -9,6 +9,7 @@ USERNAME = "example"
 PASSWORD = "example"
 
 BACKEND_PATH = "http://localhost:8000"
+NOTE_PATH = "./notes"
 
 def init():
     # with open("./web/base.js", "r", encoding="utf-8") as f:
