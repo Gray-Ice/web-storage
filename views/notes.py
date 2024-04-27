@@ -73,13 +73,14 @@ async def delete_file(model: _DeleteFileModel):
     """
     Delete the file that pointed to by the path
     """
-    if not os.path.exists(model.path):
-        return JSONResponse(status_code=500, content={"msg": f"Can not found path {model.path}"})
-    if os.path.isdir(model.path):
-        shutil.rmtree(model.path)
-        return JSONResponse(status_code=200, content={"msg": f"remove folder {model.path} success"})
-    os.remove(model.path)
-    return JSONResponse(status_code=200, content={"msg": f"removed path {model.path}."})
+    path = f"{NOTE_PATH}{model.path}"
+    if not os.path.exists(path):
+        return JSONResponse(status_code=200, content={"msg": f"Can not found path {model.path}", "code": 500})
+    if os.path.isdir(path):
+        shutil.rmtree(path)
+        return JSONResponse(status_code=200, content={"msg": f"remove folder {model.path} success", "code": 200})
+    os.remove(path)
+    return JSONResponse(status_code=200, content={"msg": f"removed path {model.path}.", "code": 200})
 
 
 class UploadNotesRequest(BaseModel):
@@ -149,3 +150,28 @@ async def upload_note(model: UploadNotesRequest):
         return NormalResponse(code=500, msg=f'{type(e)}--{e}')
 
     return NormalResponse(code=200, msg="Upload note success")
+
+
+@router.post("/upload_file")
+async def upload_file(file: UploadFile, path: Annotated[str, Form()] = "/", name: Annotated[str, Form()] = ""):
+    """
+    Upload file under path, and rename it to name if name was specified
+    :param file: The file
+    :param path: the path that you want transport file into
+    :param name: if you specified the name,
+     the file will be renamed to name, or it will use the default file name already belongs the file
+    """
+    print(f"The root path is {path}. filename is: {file.filename}")
+    if name == "":
+        filename = file.filename
+    else:
+        filename = name
+    path = f"{NOTE_PATH}{path}"
+    if not os.path.exists(path):
+        return JSONResponse(status_code=500, content={"msg": f"can not find path: {path}", "code": 500})
+    if not path.endswith("/"):
+        path = f"{path}/"
+    with open(f"{path}{filename}", "wb") as f:
+        f.write(await file.read())
+    return JSONResponse(status_code=200, content={"msg": f"{path}{filename} already created", "code": 200})
+
