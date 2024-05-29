@@ -3,3 +3,6 @@ static/
 __pycache__/
 .idea/
 *.pyc
+*.md
+*.jpg
+*.png
